@@ -1,45 +1,47 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import CardList from '../components/CardList';
 import SearchBox from '../components/SearchBox';
 import Scroll from '../components/Scroll';
 import './App.css';
 
-class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      robots: [],
-      searchfield: ''
-    }
-  }
+const App = () => {
 
-  componentDidMount() {
+  const [robots, setRobots] = useState([]);
+  const [searchField, setSearchField] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
     fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response=> response.json())
-      .then(users => {this.setState({ robots: users})});
+      .then(response => response.json())
+      .then((users) => {
+        setRobots(users);
+        setLoading(false);
+      });
+  }, []);
+
+  const onSearchChange = (event) => {
+    setSearchField(event.target.value);
   }
 
-  onSearchChange = (event) => {
-    this.setState({ searchfield: event.target.value })
-  }
+  const filteredRobots = robots.filter(robot =>{
+      return robot.name.toLowerCase().includes(searchField.toLowerCase());
+  })
 
-  render() {
-    const { robots, searchfield } = this.state;
-    const filteredRobots = robots.filter(robot =>{
-      return robot.name.toLowerCase().includes(searchfield.toLowerCase());
-    })
-    return !robots.length ?
-      <h1>Loading</h1> :
-      (
-        <div className='tc'>
+  return (
+    <div className='tc'>
+      {loading ? (
+        <h1>Loading</h1>
+      ) : (
           <h1 className='f1'>RoboFriends</h1>
-          <SearchBox searchChange={this.onSearchChange}/>
-          <Scroll>
-            <CardList robots={filteredRobots} />
-          </Scroll>
-        </div>
-      );
-  }
+        )
+      }
+      <SearchBox searchChange={onSearchChange} />
+      <Scroll>
+        <CardList robots={filteredRobots} />
+      </Scroll>
+    </div>
+  )
 }
 
-export default App;
+export default App
