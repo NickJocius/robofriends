@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { searchRobots } from '../features/robotSearch/robotSearchSlice';
 import CardList from '../components/CardList';
 import SearchBox from '../components/SearchBox';
 import Scroll from '../components/Scroll';
 import './App.css';
 
 const App = () => {
+  const searchField = useSelector((state) => state.robotSearch.searchField);
+  const dispatch = useDispatch();
 
   const [robots, setRobots] = useState([]);
-  const [searchField, setSearchField] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -21,7 +24,7 @@ const App = () => {
   }, []);
 
   const onSearchChange = (event) => {
-    setSearchField(event.target.value);
+    dispatch(searchRobots(event.target.value))
   }
 
   const filteredRobots = robots.filter(robot =>{
