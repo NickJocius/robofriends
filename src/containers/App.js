@@ -33,9 +33,12 @@ const App = () => {
         )
       }
       <SearchBox searchChange={onSearchChange} />
-      <Scroll>
-        <CardList robots={filteredRobots} />
-      </Scroll>
+      {isSuccess && ( 
+        <Scroll>
+          <CardList robots={filteredRobots} />
+        </Scroll>
+      )}
+      
   
     </div>
   )
