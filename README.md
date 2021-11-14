@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Robo Friends App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is an adaptation of a udemy project. I customized it by integrating redux-toolkit and utilizing RTK Query for fetching data from the jsonplaceholder API
 
 ## Available Scripts
 
