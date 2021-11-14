@@ -5,7 +5,7 @@ export const robotApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: 'https://jsonplaceholder.typicode.com/' }),
     endpoints: (builder) => ({
         getAllRobots: builder.query({
-            query: (users) => `${users}`,
+            query: (users) => `${users}?format=json`,
         }),
         getRobotById: builder.query({
             query: (id) => `users/${id}`,
@@ -16,4 +16,4 @@ export const robotApi = createApi({
     }),
 })
 
-export const { useGetAllRobots, getRobotById, getPostsById } = robotApi;
+export const { useGetAllRobotsQuery, useGetRobotById, useGetPostsById } = robotApi;
